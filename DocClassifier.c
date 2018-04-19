@@ -3,11 +3,11 @@
 #include <string.h>
 
 #define SIZE 2000
-#define NUM_KEYWORDS 5
+#define NUM_KEYWORDS 6 //set the number of category keywords here
 #define STR_LENGTH 30
 
 struct Health {
-	char *health_bow[5];
+	char *health_bow[NUM_KEYWORDS];
 	int key_hits;
 };
 
@@ -23,7 +23,7 @@ int main(int argc, char *args[]) {
 		return 0;
 	}
 	//populating struct category with keywords retrieved from training data
-	setKeywords(&health_articles); 
+	setHealthKeywords(&health_articles); 
 	char line[1000];
 	FILE *file;
 	file = fopen(args[1], "r");  //r for reading; will throw segmentation fault if file not found ; use commnad line input for filename!
@@ -32,7 +32,7 @@ int main(int argc, char *args[]) {
 		return 0;
 	}
 	while (fgets(line, 1000, file) != NULL) {
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < NUM_KEYWORDS; i++) {
 			if (strcasestr(line, health_articles.health_bow[i]) != NULL) {
 				health_articles.key_hits++;
 			}
@@ -50,7 +50,8 @@ void setHealthKeywords(struct Health *health_articles) {
 	health_articles -> health_bow[1] = "study";
 	health_articles -> health_bow[2] = "findings";
 	health_articles -> health_bow[3] = "long-term";
-	health_articles -> health_bow[4] = "marijuana";
+	health_articles -> health_bow[4] = "healthy";
+	health_articles -> health_bow[5] = "results";
 	health_articles -> key_hits = 0;
 }
 
